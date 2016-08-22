@@ -29,3 +29,17 @@ export AUTH0_APP_ID="<APP_ID>"
 export AUTH0_APP_SECRET="<APP_SECRET>"
 mix phoenix.server
 ```
+
+## Example
+
+Now, you can send curl requests:
+
+```shell
+curl http://localhost:4000/api/status # gives 401
+curl -H "Authorization: Bearer <valid_jwt_token>" http://localhost:4000/api/status # gives 200
+
+# when the token does not have app_metadata containing role admin
+curl -H "Authorization: Bearer <jwt_token>" http://localhost:4000/api/admin # gives 403
+
+curl -H "Authorization: Bearer <appropriate_jwt_token>" http://localhost:4000/api/admin # gives 200
+```

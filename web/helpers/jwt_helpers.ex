@@ -19,8 +19,8 @@ defmodule JwtPhoenix.JWTHelpers do
   def verify do
     %Joken.Token{}
     |> with_json_module(Poison)
-    |> with_signer(hs256(config[:client_secret]))
-    |> with_validation("aud", &(&1 == config[:client_id]))
+    |> with_signer(hs256(config[:app_secret]))
+    |> with_validation("aud", &(&1 == config[:app_id]))
     |> with_validation("exp", &(&1 > current_time))
     |> with_validation("iat", &(&1 <= current_time))
     |> with_validation("iss", &(&1 == config[:app_baseurl]))
@@ -30,7 +30,7 @@ defmodule JwtPhoenix.JWTHelpers do
   Create token from client id and secret
   Used for unit tests
   """
-  def create_bearer_token(auth_scopes, config_items \\ %{:signer => :client_secret, :aud => :client_id}) do
+  def create_bearer_token(auth_scopes, config_items \\ %{:signer => :app_secret, :aud => :app_id}) do
     %Joken.Token{claims: auth_scopes}
     |> with_json_module(Poison)
     |> with_signer(hs256(config[config_items[:signer]]))

@@ -24,8 +24,8 @@ config :logger, :console,
 
 config :jwt_phoenix, :auth0,
   app_baseurl: System.get_env("AUTH0_BASEURL"),
-  client_id: System.get_env("AUTH0_CLIENT_ID"),
-  client_secret: "AUTH0_CLIENT_SECRET"
+  app_id: System.get_env("AUTH0_APP_ID"),
+  app_secret: "AUTH0_APP_SECRET"
     |> System.get_env
     |> Kernel.||("")
     |> Base.url_decode64
